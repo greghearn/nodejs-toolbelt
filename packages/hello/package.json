@@ -1,5 +1,5 @@
 {
-  "name": "hello",
+  "name": "@greghearn/hello",
   "version": "1.0.0",
   "description": "Package sample for hello world",
   "main": "index.js",
@@ -7,5 +7,5 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Greg Hearn",
-  "license": "ISC"
+  "license": "MIT"
 }
