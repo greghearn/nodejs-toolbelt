@@ -1,0 +1,18 @@
+{
+  "name": "@greghearn/nodejs-toolbelt",
+  "version": "1.0.0",
+  "description": "My collection of reusable packages written in nodejs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/greghearn/nodejs-toolbelt.git"
+  },
+  "author": "Greg Hearn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/greghearn/nodejs-toolbelt/issues"
+  },
+  "homepage": "https://github.com/greghearn/nodejs-toolbelt#readme",
+  "dependencies": {
+    "@greghearn/hello": "file:packages/hello"
+  }
+}
