@@ -1,6 +1,6 @@
 {
   "name": "@greghearn/hello",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "Package sample for hello world",
   "main": "index.js",
   "scripts": {
