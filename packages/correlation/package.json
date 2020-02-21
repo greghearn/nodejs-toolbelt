@@ -1,7 +1,7 @@
 {
-  "name": "@greghearn/hello",
-  "version": "1.0.5",
-  "description": "Package sample for hello world",
+  "name": "@greghearn/correlation",
+  "version": "1.0.0",
+  "description": "Module for recording correlation key value pairs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
