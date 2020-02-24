@@ -4,8 +4,11 @@
   "description": "Module for recording correlation key value pairs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Greg Hearn",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "global-cache": "^1.2.1"
+  }
 }

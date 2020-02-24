@@ -1,20 +1,19 @@
 'use strict'
 
-const DEBUG_LOG_ENABLED = 'debug-log-enabled'
+var cache = require('global-cache')
+
+const CACHE_KEY = 'correlation-keys'
+const DEBUG_ENABLED = 'debug-enabled'
 
 class CorrelationKeys {
   constructor () {
-    if (!CorrelationKeys.instance) {
-      this.clearAll()
-      CorrelationKeys.instance = this
-    }
-
-    return CorrelationKeys.instance
+    this.context = {}
+    this.prefix = 'x-correlation-'
   }
 
   set (key, value) {
-    if (!key.startsWith('x-correlation-')) {
-      key = 'x-correlation-' + key
+    if (!key.startsWith(this.prefix)) {
+      key = this.prefix + key
     }
     this.context[key] = value
   }
@@ -32,12 +31,14 @@ class CorrelationKeys {
   }
 
   isDebugEnabled () {
-    return (this.context[DEBUG_LOG_ENABLED] === 'true')
+    return (this.context[DEBUG_ENABLED] === 'true')
   }
 }
 
 const instance = new CorrelationKeys()
-Object.freeze(instance)
+if (!cache.has(CACHE_KEY)) {
+  cache.set(CACHE_KEY, instance)
+}
+Object.assign(instance, cache.get(CACHE_KEY))
 
-// export default instance
 module.exports = instance
