@@ -6,16 +6,21 @@ const CACHE_KEY = 'correlation-keys'
 const DEBUG_ENABLED = 'debug-enabled'
 
 class CorrelationKeys {
-  constructor () {
+  constructor ({
+    prefix = 'x-correlation-'
+  } = {}) {
     this.context = {}
-    this.prefix = 'x-correlation-'
+    this.prefix = prefix
   }
 
   set (key, value) {
-    if (!key.startsWith(this.prefix)) {
-      key = this.prefix + key
+    if (typeof key === 'string') {
+      const regex = new RegExp(this.prefix, 'i')
+      if (key.search(regex) < 0) {
+        key = `${this.prefix}${key}`
+      }
+      this.context[key] = value
     }
-    this.context[key] = value
   }
 
   get () {
@@ -28,6 +33,16 @@ class CorrelationKeys {
 
   replaceAll (context) {
     this.context = context
+  }
+
+  replacePrefix (value) {
+    const tmp = {}
+    const regex = new RegExp(this.prefix, 'i')
+    for (var element in this.context) {
+      const key = element.replace(regex, value)
+      tmp[key] = this.context[element]
+    }
+    this.replaceAll(tmp)
   }
 
   isDebugEnabled () {

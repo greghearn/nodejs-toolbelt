@@ -79,3 +79,23 @@ describe('when creating two instances', () => {
     expect(correlationB.get()).toEqual({ 'x-correlation-id': 'test' })
   })
 })
+
+describe('when we replace the default prefix with a new prefix', () => {
+  const correlation = require('../index')
+  beforeEach(() => {
+    correlation.clearAll()
+  })
+  it('the old prefix is replaced with a new one', () => {
+    correlation.set('id', 'test')
+    expect(correlation.get()).toEqual({ 'x-correlation-id': 'test' })
+    correlation.replacePrefix('x-org-')
+    expect(correlation.get()).toEqual({ 'x-org-id': 'test' })
+  })
+  it('the beginning of the old prefix is replaced with a new one', () => {
+    correlation.set('x-correlation-x-correlation-id', 'test')
+    expect(correlation.get()).toEqual({ 'x-correlation-x-correlation-id': 'test' })
+    correlation.replacePrefix('x-org-')
+    expect(correlation.get()).toEqual({ 'x-org-x-correlation-id': 'test' })
+    correlation.clearAll()
+  })
+})
