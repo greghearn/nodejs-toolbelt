@@ -1,6 +1,6 @@
 {
   "name": "@greghearn/correlation-keys",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Module for recording correlation key value pairs",
   "main": "index.js",
   "scripts": {
