@@ -1,9 +1,18 @@
 'use strict'
 
-var cache = require('global-cache')
+const cache = require('global-cache')
 
 const CACHE_KEY = 'correlation-keys'
-const DEBUG_ENABLED = 'debug-enabled'
+// const DEBUG_ENABLED = 'debug-enabled'
+
+const normalizeValue = v => typeof v === 'string' ? v : String(v)
+const normalizeKey = k => {
+  if (typeof k !== 'string') { k = String(k) }
+  if (/[^a-z0-9\-#$%&'*+.^_`|~]/i.test(k)) {
+    throw new TypeError('Invalid character in key string')
+  }
+  return k.toLowerCase()
+}
 
 class CorrelationKeys {
   constructor ({
@@ -14,16 +23,23 @@ class CorrelationKeys {
   }
 
   set (key, value) {
-    if (typeof key === 'string') {
-      const regex = new RegExp(this.prefix, 'i')
-      if (key.search(regex) < 0) {
-        key = `${this.prefix}${key}`
-      }
-      this.context[key] = value
+    const regex = new RegExp(this.prefix, 'i')
+    if (key.search(regex) < 0) {
+      key = `${this.prefix}${key}`
     }
+    this.context[normalizeKey(key)] = normalizeValue(value)
   }
 
-  get () {
+  get (key) {
+    key = normalizeKey(`${this.prefix}${key}`)
+    return this.context[key] ? this.context[key] : null
+  }
+
+  has (key) {
+    return (this.get(key) !== null)
+  }
+
+  getAll () {
     return this.context
   }
 
@@ -35,19 +51,19 @@ class CorrelationKeys {
     this.context = context
   }
 
-  replacePrefix (value) {
+  replacePrefix (str) {
     const tmp = {}
     const regex = new RegExp(this.prefix, 'i')
-    for (var element in this.context) {
-      const key = element.replace(regex, value)
-      tmp[key] = this.context[element]
-    }
+    Object.entries(this.context).map(([k, v]) => {
+      const key = k.replace(regex, str)
+      tmp[normalizeKey(key)] = v
+    })
     this.replaceAll(tmp)
   }
 
-  isDebugEnabled () {
-    return (this.context[DEBUG_ENABLED] === 'true')
-  }
+  // isDebugEnabled () {
+  //   return (this.context[DEBUG_ENABLED] === 'true')
+  // }
 }
 
 const instance = new CorrelationKeys()
