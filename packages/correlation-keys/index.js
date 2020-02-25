@@ -3,7 +3,6 @@
 const cache = require('global-cache')
 
 const CACHE_KEY = 'correlation-keys'
-// const DEBUG_ENABLED = 'debug-enabled'
 
 const normalizeValue = v => typeof v === 'string' ? v : String(v)
 const normalizeKey = k => {
@@ -15,11 +14,10 @@ const normalizeKey = k => {
 }
 
 class CorrelationKeys {
-  constructor ({
-    prefix = 'x-correlation-'
-  } = {}) {
+  constructor (options = {}) {
+    this.options = options
+    this.prefix = options.prefix || 'x-correlation-'
     this.context = {}
-    this.prefix = prefix
   }
 
   set (key, value) {
@@ -60,10 +58,6 @@ class CorrelationKeys {
     })
     this.replaceAll(tmp)
   }
-
-  // isDebugEnabled () {
-  //   return (this.context[DEBUG_ENABLED] === 'true')
-  // }
 }
 
 const instance = new CorrelationKeys()

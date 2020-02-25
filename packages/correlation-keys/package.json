@@ -1,10 +1,10 @@
 {
   "name": "@greghearn/correlation-keys",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Module for recording correlation key value pairs",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "npm-publish": "npm publish --access public"
   },
   "author": "Greg Hearn",
   "license": "MIT",

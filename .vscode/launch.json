@@ -8,7 +8,8 @@
       "type": "node",
       "request": "launch",
       "name": "Debug package `correlation keys`",
-      "program": "${workspaceRoot}/node_modules/.bin/jest"
+      "program": "${workspaceRoot}/node_modules/.bin/jest",
+      "cwd": "${workspaceFolder}/packages/correlation-keys"
     }
   ]
 }
