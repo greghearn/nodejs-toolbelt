@@ -4,6 +4,7 @@
   "description": "Module for recording correlation key value pairs",
   "main": "index.js",
   "scripts": {
+    "test": "jest --collectCoverage",
     "npm-publish": "npm publish --access public"
   },
   "author": "Greg Hearn",

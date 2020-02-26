@@ -4,6 +4,7 @@ const cache = require('global-cache')
 
 const CACHE_KEY = 'correlation-keys'
 
+const regex = s => new RegExp(s, 'i')
 const normalizeValue = v => typeof v === 'string' ? v : String(v)
 const normalizeKey = k => {
   if (typeof k !== 'string') { k = String(k) }
@@ -21,8 +22,7 @@ class CorrelationKeys {
   }
 
   set (key, value) {
-    const regex = new RegExp(this.prefix, 'i')
-    if (key.search(regex) < 0) {
+    if (key.search(regex(this.prefix)) < 0) {
       key = `${this.prefix}${key}`
     }
     this.context[normalizeKey(key)] = normalizeValue(value)
@@ -46,17 +46,19 @@ class CorrelationKeys {
   }
 
   replaceAll (context) {
-    this.context = context
+    this.clearAll()
+    Object.entries(context).map(([k, v]) => {
+      this.set(k, v)
+    })
   }
 
   replacePrefix (str) {
     const tmp = {}
-    const regex = new RegExp(this.prefix, 'i')
     Object.entries(this.context).map(([k, v]) => {
-      const key = k.replace(regex, str)
+      const key = k.replace(regex(this.prefix), str)
       tmp[normalizeKey(key)] = v
     })
-    this.replaceAll(tmp)
+    this.context = tmp
   }
 }
 

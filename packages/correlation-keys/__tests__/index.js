@@ -93,7 +93,7 @@ describe('when replacing all correlation keys', () => {
   afterEach(() => {
     keys.clearAll()
   })
-  it('it will be empty', () => {
+  it('replace one', () => {
     keys.replaceAll({
       'x-correlation-id': 'test'
     })
@@ -101,6 +101,18 @@ describe('when replacing all correlation keys', () => {
       'x-correlation-id': 'test'
     })
     expect(keys.getAll()).not.toHaveProperty('x-correlation-idempotency')
+  })
+  it('it will be replaced with prefix preserved', () => {
+    keys.replaceAll({
+      'org-id': '123',
+      'org-dept': 'abc'
+    })
+    expect(keys.getAll()).toEqual({
+      'x-correlation-org-id': '123',
+      'x-correlation-org-dept': 'abc'
+    })
+    expect(keys.getAll()).not.toHaveProperty('org-id')
+    expect(keys.getAll()).not.toHaveProperty('org-dept')
   })
 })
 
