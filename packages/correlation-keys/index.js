@@ -5,7 +5,8 @@ const cache = require('global-cache')
 const CACHE_KEY = 'correlation-keys'
 
 const regex = s => new RegExp(s, 'i')
-const normalizeValue = v => typeof v === 'string' ? v : String(v)
+const removePrefix = (k, p) => normalizeStr(k).replace(regex(p), '')
+const normalizeStr = v => typeof v === 'string' ? v : String(v)
 const normalizeKey = k => {
   if (typeof k !== 'string') { k = String(k) }
   if (/[^a-z0-9\-#$%&'*+.^_`|~]/i.test(k)) {
@@ -14,51 +15,69 @@ const normalizeKey = k => {
   return k.toLowerCase()
 }
 
-class CorrelationKeys {
+class CorrelationKeys extends Map {
   constructor (options = {}) {
+    super()
     this.options = options
     this.prefix = options.prefix || 'x-correlation-'
-    this.context = {}
   }
 
   set (key, value) {
-    if (key.search(regex(this.prefix)) < 0) {
-      key = `${this.prefix}${key}`
-    }
-    this.context[normalizeKey(key)] = normalizeValue(value)
+    return super.set(normalizeKey(
+      removePrefix(key, this.prefix)), normalizeStr(value)
+    )
   }
 
   get (key) {
-    key = normalizeKey(`${this.prefix}${key}`)
-    return this.context[key] ? this.context[key] : null
+    return super.get(normalizeKey(
+      removePrefix(key, this.prefix))
+    )
   }
 
   has (key) {
-    return (this.get(key) !== null)
+    return super.has(normalizeKey(
+      removePrefix(key, this.prefix))
+    )
   }
 
-  getAll () {
-    return this.context
-  }
-
-  clearAll () {
-    this.context = {}
-  }
-
-  replaceAll (context) {
-    this.clearAll()
+  replace (context) {
+    this.clear()
     Object.entries(context).map(([k, v]) => {
       this.set(k, v)
     })
   }
 
-  replacePrefix (str) {
-    const tmp = {}
-    Object.entries(this.context).map(([k, v]) => {
-      const key = k.replace(regex(this.prefix), str)
-      tmp[normalizeKey(key)] = v
-    })
-    this.context = tmp
+  getPrefix () {
+    return this.prefix
+  }
+
+  setPrefix (string) {
+    this.prefix = string
+  }
+
+  delete (key) {
+    return super.delete(normalizeKey(
+      removePrefix(key, this.prefix))
+    )
+  }
+
+  clear () {
+    super.clear()
+  }
+
+  size () {
+    return super.size
+  }
+
+  /**
+   * Returns a POJO of key, value pairs for every entry in the map
+   */
+  entries () {
+    const result = {}
+    for (const [key, value] of super.entries()) {
+      result[`${this.prefix}${key}`] = value
+    }
+    return result
   }
 }
 

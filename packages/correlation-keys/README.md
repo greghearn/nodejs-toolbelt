@@ -1,5 +1,5 @@
 # nodejs-toolbelt package correlation-keys
-This module provides a way for recording correlation key value pairs.
+This module provides a way for recording correlation key value pairs extended from javascripts Map interface.
 
 A configurable prefix is added to the beginning of each correlation key defaulting to 'x-correlation-' if one is not configiured. Setting your own prefix is optional, any changes to your prefix will preserve your values assigned to their corresponding keys with your new prefix.
 
@@ -19,7 +19,7 @@ npm install @greghearn/correlation-keys
 const correlationKeys = require('@greghearn/correlation-keys')
 
 // (optional) set a new prefix name
-correlationKeys.replacePrefix('x-org-') // key prefix name change from 'x-correlation-' to 'x-org-'
+correlationKeys.setPrefix('x-org-') // key prefix name change from 'x-correlation-' to 'x-org-'
 
 // sets a key value pair to { 'x-org-idempotency': '23e7Ynqw92Cvw79' }
 correlationKeys.set('idempotency', '23e7Ynqw92Cvw79') 
@@ -32,6 +32,11 @@ correlationKeys.get('IDeMPotENcY') // returns '23e7Ynqw92Cvw79'
 
 // check a key exists
 correlationKeys.has('idempotency') // returns boolean
+
+correlationKeys.entries() // returns { 'x-org-idempotency': '23e7Ynqw92Cvw79' }
+
+correlationKeys.size() // returns 1
+
 ```
 
 

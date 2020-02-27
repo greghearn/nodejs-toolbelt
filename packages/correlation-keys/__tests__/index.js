@@ -7,12 +7,24 @@ describe('when the key is missing x-correlation- prefix', () => {
     keys.set('id', 'test')
   })
   afterEach(() => {
-    keys.clearAll()
+    keys.clear()
   })
-  it('adds the prefix', () => {
-    expect(keys.getAll()).toEqual({
-      'x-correlation-id': 'test'
-    })
+  test('adds the prefix', () => {
+    expect(keys.has('x-correlation-id')).toEqual(true)
+    expect(keys.get('x-correlation-id')).toEqual('test')
+  })
+})
+
+describe('when we change the prefix', () => {
+  const originalPrefix = keys.getPrefix()
+  beforeEach(() => {
+    keys.setPrefix('x-department-id')
+  })
+  afterEach(() => {
+    keys.setPrefix(originalPrefix)
+  })
+  test('it updates the prefix', () => {
+    expect(keys.getPrefix()).toEqual('x-department-id')
   })
 })
 
@@ -21,19 +33,20 @@ describe('when key, value is set', () => {
   beforeEach(() => {
   })
   afterEach(() => {
-    correlation.clearAll()
+    correlation.clear()
   })
-  it('throws TypeError on invalid key name', () => {
-    expect(function () { correlation.set({ '<Accept>': ['application/json'] }) }).toThrow(TypeError)
-    expect(function () { correlation.set({ 'Accept:': ['application/json'] }) }).toThrow(TypeError)
+  test('throws TypeError on invalid key name', () => {
+    expect(function () { correlation.set('<Accept>', 'application/json') }).toThrow(TypeError)
+    expect(function () { correlation.set('Accept:', 'application/json') }).toThrow(TypeError)
+    expect(function () { correlation.set([0, 1, 2], 'application/json') }).toThrow(TypeError)
   })
-  it('get() keys are case insensitive', () => {
+  test('get() keys are case insensitive', () => {
     correlation.set('Accept', 'application/json')
     expect(correlation.get('ACCEPT')).toEqual('application/json')
     expect(correlation.get('Accept')).toEqual('application/json')
     expect(correlation.get('accept')).toEqual('application/json')
   })
-  it('has() keys been found ', () => {
+  test('has() keys been found ', () => {
     correlation.set('Accept', 'application/json')
     expect(correlation.has('ACCEPT')).toEqual(true)
     expect(correlation.has('Accept')).toEqual(true)
@@ -48,12 +61,11 @@ describe('when adding the key twice', () => {
     keys.set('id', 'test two')
   })
   afterEach(() => {
-    keys.clearAll()
+    keys.clear()
   })
-  it('it overrides the existing first value', () => {
-    expect(keys.getAll()).toEqual({
-      'x-correlation-id': 'test two'
-    })
+  test('it overrides the existing first value', () => {
+    expect(keys.has('x-correlation-id')).toEqual(true)
+    expect(keys.get('x-correlation-id')).toEqual('test two')
   })
 })
 
@@ -62,12 +74,11 @@ describe('when adding the complete key prefix as well', () => {
     keys.set('x-correlation-id', 'test')
   })
   afterEach(() => {
-    keys.clearAll()
+    keys.clear()
   })
-  it('it preserves the whole key prefix regardless', () => {
-    expect(keys.getAll()).toEqual({
-      'x-correlation-id': 'test'
-    })
+  test('it preserves the whole key prefix regardless', () => {
+    expect(keys.has('x-correlation-id')).toEqual(true)
+    expect(keys.get('x-correlation-id')).toEqual('test')
   })
 })
 
@@ -77,11 +88,30 @@ describe('when clearing all correlation keys', () => {
     keys.set('x-correlation-idempotency', 'abc123')
   })
   afterEach(() => {
-    keys.clearAll()
+    keys.clear()
   })
-  it('it will be empty', () => {
-    keys.clearAll()
-    expect(keys.getAll()).toEqual({})
+  test('it will be empty', () => {
+    keys.clear()
+    expect(keys.size()).toEqual(0)
+  })
+})
+
+describe('when deleting correlation keys', () => {
+  beforeEach(() => {
+    keys.set('x-correlation-id', 'test')
+    keys.set('x-correlation-idempotency', 'abc123')
+  })
+  afterEach(() => {
+    keys.clear()
+  })
+  test('one will still exist', () => {
+    keys.delete('x-correlation-id')
+    expect(keys.size()).toEqual(1)
+  })
+  test('it will be empty', () => {
+    keys.delete('x-correlation-id')
+    keys.delete('x-correlation-idempotency')
+    expect(keys.size()).toEqual(0)
   })
 })
 
@@ -91,28 +121,25 @@ describe('when replacing all correlation keys', () => {
     keys.set('x-correlation-idempotency', 'abc123')
   })
   afterEach(() => {
-    keys.clearAll()
+    keys.clear()
   })
-  it('replace one', () => {
-    keys.replaceAll({
+  test('replace one', () => {
+    keys.replace({
       'x-correlation-id': 'test'
     })
-    expect(keys.getAll()).toEqual({
-      'x-correlation-id': 'test'
-    })
-    expect(keys.getAll()).not.toHaveProperty('x-correlation-idempotency')
+    expect(keys.has('x-correlation-id')).toEqual(true)
+    expect(keys.get('x-correlation-id')).toEqual('test')
+    expect(keys.has('x-correlation-idempotency')).toEqual(false)
   })
-  it('it will be replaced with prefix preserved', () => {
-    keys.replaceAll({
+  test('it will be replaced with prefix preserved', () => {
+    keys.replace({
       'org-id': '123',
       'org-dept': 'abc'
     })
-    expect(keys.getAll()).toEqual({
-      'x-correlation-org-id': '123',
-      'x-correlation-org-dept': 'abc'
-    })
-    expect(keys.getAll()).not.toHaveProperty('org-id')
-    expect(keys.getAll()).not.toHaveProperty('org-dept')
+    expect(keys.has('x-correlation-org-id')).toEqual(true)
+    expect(keys.get('x-correlation-org-id')).toEqual('123')
+    expect(keys.has('x-correlation-org-dept')).toEqual(true)
+    expect(keys.get('x-correlation-org-dept')).toEqual('abc')
   })
 })
 
@@ -123,35 +150,31 @@ describe('when creating two instances', () => {
     correlationA.set('id', 'test')
   })
   afterEach(() => {
-    correlationA.clearAll()
-    correlationB.clearAll()
+    correlationA.clear()
+    correlationB.clear()
   })
-  it('both instance will contain the same data', () => {
-    expect(correlationA.getAll()).toHaveProperty('x-correlation-id')
-    expect(correlationA.getAll()).toEqual({ 'x-correlation-id': 'test' })
-    expect(correlationB.getAll()).toHaveProperty('x-correlation-id')
-    expect(correlationB.getAll()).toEqual({ 'x-correlation-id': 'test' })
+  test('both instance will contain the same data', () => {
+    expect(correlationA.has('x-correlation-id')).toEqual(true)
+    expect(correlationB.has('x-correlation-id')).toEqual(true)
   })
 })
 
 describe('when we replace the default prefix with a new prefix', () => {
   const correlation = require('../index')
   beforeEach(() => {
-    correlation.clearAll()
+    correlation.clear()
+    correlation.setPrefix('x-correlation-')
   })
-  afterEach(() => {
-    correlation.clearAll()
-  })
-  it('the old prefix is replaced with a new one', () => {
+  test('the old prefix is replaced with a new one', () => {
     correlation.set('id', 'test')
-    expect(correlation.getAll()).toEqual({ 'x-correlation-id': 'test' })
-    correlation.replacePrefix('x-org-')
-    expect(correlation.getAll()).toEqual({ 'x-org-id': 'test' })
+    expect(correlation.has('x-correlation-id')).toEqual(true)
+    correlation.setPrefix('x-org-')
+    expect(correlation.has('x-org-id')).toEqual(true)
   })
-  it('the beginning of the old prefix is replaced with a new one', () => {
+  test('the beginning of the old prefix is replaced with a new one', () => {
     correlation.set('x-correlation-x-correlation-id', 'test')
-    expect(correlation.getAll()).toEqual({ 'x-correlation-x-correlation-id': 'test' })
-    correlation.replacePrefix('x-org-')
-    expect(correlation.getAll()).toEqual({ 'x-org-x-correlation-id': 'test' })
+    expect(correlation.has('x-correlation-x-correlation-id')).toEqual(true)
+    correlation.setPrefix('x-org-')
+    expect(correlation.has('x-org-x-correlation-id')).toEqual(true)
   })
 })
