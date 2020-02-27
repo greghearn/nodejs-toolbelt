@@ -1,5 +1,7 @@
 # nodejs-toolbelt package correlation-keys
-This module provides a way for recording correlation key value pairs extended from javascripts Map interface.
+This module provides a way for recording correlation key value pairs between modules so you can access them between microservices for monitoring or logging requirements for example.
+
+The module is extended from javascripts Map interface so you have access to method functionality such as set, get, clear, size, entries etc.
 
 A configurable prefix is added to the beginning of each correlation key defaulting to 'x-correlation-' if one is not configiured. Setting your own prefix is optional, any changes to your prefix will preserve your values assigned to their corresponding keys with your new prefix.
 

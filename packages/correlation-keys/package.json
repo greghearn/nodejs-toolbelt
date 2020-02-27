@@ -1,6 +1,6 @@
 {
   "name": "@greghearn/correlation-keys",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Module for recording correlation key value pairs",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,13 @@
     "npm-publish-minor": "npm version minor && npm publish --access public",
     "npm-publish-major": "npm version major && npm publish --access public"
   },
+  "keywords": [
+    "lambda",
+    "correlation",
+    "debug",
+    "logging",
+    "microservice"
+  ],
   "author": "Greg Hearn",
   "license": "MIT",
   "dependencies": {
