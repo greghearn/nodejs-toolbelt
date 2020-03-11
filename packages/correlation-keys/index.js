@@ -1,8 +1,6 @@
 'use strict'
 
-const cache = require('global-cache')
-
-const CACHE_KEY = 'correlation-keys'
+const GLOBAL_KEY = '@greghearn/correlation-keys'
 
 const regex = s => new RegExp(s, 'i')
 const removePrefix = (k, p) => normalizeStr(k).replace(regex(p), '')
@@ -82,9 +80,9 @@ class CorrelationKeys extends Map {
 }
 
 const instance = new CorrelationKeys()
-if (!cache.has(CACHE_KEY)) {
-  cache.set(CACHE_KEY, instance)
+if (!global[GLOBAL_KEY]) {
+  global[GLOBAL_KEY] = instance
 }
-Object.assign(instance, cache.get(CACHE_KEY))
+Object.assign(instance, global[GLOBAL_KEY])
 
 module.exports = instance

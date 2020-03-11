@@ -1,6 +1,7 @@
 'use strict'
 
 const keys = require('../index')
+const GLOBAL_KEY = '@greghearn/correlation-keys'
 
 describe('when the key is missing x-correlation- prefix', () => {
   beforeEach(() => {
@@ -143,7 +144,7 @@ describe('when replacing all correlation keys', () => {
   })
 })
 
-describe('when creating two instances', () => {
+describe('when creating two Global references', () => {
   const correlationA = require('../index')
   const correlationB = require('../index')
   beforeEach(() => {
@@ -151,9 +152,11 @@ describe('when creating two instances', () => {
   })
   afterEach(() => {
     correlationA.clear()
-    correlationB.clear()
   })
-  test('both instance will contain the same data', () => {
+  test('stores a reference to the global instance as a global', () => {
+    expect(global[GLOBAL_KEY]).toEqual(keys)
+  })
+  test('both instance share the same data', () => {
     expect(correlationA.has('x-correlation-id')).toEqual(true)
     expect(correlationB.has('x-correlation-id')).toEqual(true)
   })
