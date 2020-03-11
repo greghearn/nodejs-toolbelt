@@ -18,7 +18,5 @@
   ],
   "author": "Greg Hearn",
   "license": "MIT",
-  "dependencies": {
-    "global-cache": "^1.2.1"
-  }
+  "dependencies": {}
 }

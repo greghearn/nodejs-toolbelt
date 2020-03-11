@@ -5,7 +5,7 @@ The module is extended from javascripts Map interface so you have access to meth
 
 A configurable prefix is added to the beginning of each correlation key defaulting to 'x-correlation-' if one is not configiured. Setting your own prefix is optional, any changes to your prefix will preserve your values assigned to their corresponding keys with your new prefix.
 
-This module makes use of the [global-cache](https://www.npmjs.com/package/global-cache) package for caching to the global object so there is only ever one instance which I use for accessing correlation keys within other middleware modules.
+This module makes use of nodejs global variable for caching the global object so there is only ever one instance which I use for accessing correlation keys within other middleware modules.
 
 ## Getting started
 
