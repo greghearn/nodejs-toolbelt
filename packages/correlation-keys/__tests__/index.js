@@ -10,9 +10,13 @@ describe('when the key is missing x-correlation- prefix', () => {
   afterEach(() => {
     keys.clear()
   })
-  test('adds the prefix', () => {
+  test('can retrieve value with prefix supplied', () => {
     expect(keys.has('x-correlation-id')).toEqual(true)
     expect(keys.get('x-correlation-id')).toEqual('test')
+  })
+  test('can retrieve value with just the key (no prefix supplied)', () => {
+    expect(keys.has('id')).toEqual(true)
+    expect(keys.get('id')).toEqual('test')
   })
 })
 
