@@ -1,0 +1,16 @@
+{
+  "name": "@greghearn/random",
+  "version": "1.0.0",
+  "description": "Module for representing a pseudo random generation of randomness",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pseudo",
+    "random",
+    "generator"
+  ],
+  "author": "Greg Hearn",
+  "license": "MIT"
+}
