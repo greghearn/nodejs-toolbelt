@@ -1,7 +1,7 @@
 {
-  "name": "@greghearn/correlation-keys",
-  "version": "1.3.2",
-  "description": "Module for recording correlation key value pairs",
+  "name": "@greghearn/correlation-keys-middyware",
+  "version": "1.0.0",
+  "description": "Middy middleware module used in conjunction with @greghearn/correlation-keys for parsing header fields",
   "main": "index.js",
   "scripts": {
     "test": "jest --verbose --collectCoverage",
@@ -10,13 +10,14 @@
     "npm-publish-major": "npm version major && npm publish --access public"
   },
   "keywords": [
-    "lambda",
+    "middy",
+    "middleware",
     "correlation",
-    "debug",
-    "logging",
-    "microservice"
+    "keys"
   ],
   "author": "Greg Hearn",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "@greghearn/correlation-keys": "^1.3.2"
+  }
 }
