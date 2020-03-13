@@ -1,7 +1,7 @@
 {
-  "name": "@greghearn/correlation-keys-middyware",
+  "name": "@greghearn/squareup-authenticity-middyware",
   "version": "1.1.0",
-  "description": "Middy middleware module used in conjunction with @greghearn/correlation-keys for parsing header fields",
+  "description": "Middy middleware module used to validate a webhook events source authenticity",
   "main": "index.js",
   "scripts": {
     "test": "jest --verbose --collectCoverage",
@@ -12,12 +12,12 @@
   "keywords": [
     "middy",
     "middleware",
-    "correlation",
-    "keys"
+    "square",
+    "squareup",
+    "webhook",
+    "authenticity"
   ],
   "author": "Greg Hearn",
   "license": "MIT",
-  "dependencies": {
-    "@greghearn/correlation-keys": "^1.3.2"
-  }
+  "dependencies": {}
 }
