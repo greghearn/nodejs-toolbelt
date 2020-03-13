@@ -18,5 +18,10 @@
   ],
   "author": "Greg Hearn",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/greghearn/nodejs-toolbelt.git",
+    "directory": "packages/correlation-keys"
+  },
   "dependencies": {}
 }
