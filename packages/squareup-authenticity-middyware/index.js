@@ -1,6 +1,6 @@
 'use strict'
 
-const validateSignature = require('./validate-signature')
+const validate = require('./validate')
 
 /**
  * Purpose:
@@ -12,8 +12,11 @@ const squareupAuthenticityMiddyware = (signatureKey) => {
     before: (handler, next) => {
       const { event } = handler
       if (event) {
-        validateSignature(event, signatureKey)
-        // TODO: throw exception for OnError when its false
+        if (!validate.authenticity(event, signatureKey)) {
+          throw new Error(
+            `Could not validate the authenticity of this message ${JSON.stringify(event)}`
+          )
+        }
       }
       next()
     }

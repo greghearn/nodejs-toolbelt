@@ -3,7 +3,7 @@
 const utils = require('./utils')
 const crypto = require('crypto')
 
-const validateSignature = function validateSignature (event, signatureKey) {
+const authenticity = function authenticity (event, signatureKey) {
   const { headers } = event
   if (headers) {
     // capture the square signature value from the header if one exists
@@ -47,5 +47,5 @@ const validateSignature = function validateSignature (event, signatureKey) {
 }
 
 module.exports = {
-  validateSignature
+  authenticity
 }
