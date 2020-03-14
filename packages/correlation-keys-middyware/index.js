@@ -19,11 +19,11 @@ const eventSources = [
  *
  * @param {*} args
  */
-const correlationKeysMiddyware = (opts) => {
+const correlationKeysMiddyware = (args) => {
   const defaults = {
     debugLogRate: '0.01'
   }
-  const options = Object.assign({}, defaults, opts)
+  const options = Object.assign({}, defaults, args)
 
   return ({
     before: (handler, next) => {
