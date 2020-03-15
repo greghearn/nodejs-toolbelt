@@ -30,18 +30,17 @@ const authenticity = function authenticity (event, signatureKey) {
   // construct the signature url from the request domain and path values
   const signatureUrl = `https://${host}${path}`
 
-  // event comes in as json.
-  // body comes in as string.
   const { body } = event
+  if (body === undefined) {
+    return false
+  }
   const combined = signatureUrl + body
-  // log.debug("combined=" + combined);
 
   const hmac = crypto.createHmac('sha1', signatureKey)
   hmac.write(combined)
   hmac.end()
 
   const checkHash = hmac.read().toString('base64')
-  // console.log("checkHash=" + checkHash);
 
   // Compare HMAC-SHA1 signatures.
   if (checkHash === signature) {
