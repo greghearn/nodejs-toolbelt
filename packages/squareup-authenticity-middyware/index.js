@@ -15,13 +15,24 @@ const squareupAuthenticityMiddyware = (args) => {
 
   return ({
     before: (handler, next) => {
-      const { event } = handler
-      if (event) {
+      try {
+        const { event } = handler
         if (!validate.authenticity(event, options.signatureKey)) {
           throw new Error(
-            `Could not validate the authenticity of this message ${JSON.stringify(event)}`
+            'Could not validate the authenticity of this message'
           )
         }
+      } catch (e) {
+        throw new Error(e)
+      }
+      next()
+    },
+    after: (handler, next) => {
+      next()
+    },
+    onError: (handler, next) => {
+      handler.response = {
+        error: handler.error
       }
       next()
     }

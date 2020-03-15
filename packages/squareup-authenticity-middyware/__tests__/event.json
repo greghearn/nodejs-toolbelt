@@ -1,0 +1,125 @@
+{
+  "resource": "/",
+  "path": "/",
+  "httpMethod": "POST",
+  "headers": {
+      "Accept-Encoding": "gzip",
+      "CloudFront-Forwarded-Proto": "https",
+      "CloudFront-Is-Desktop-Viewer": "true",
+      "CloudFront-Is-Mobile-Viewer": "false",
+      "CloudFront-Is-SmartTV-Viewer": "false",
+      "CloudFront-Is-Tablet-Viewer": "false",
+      "CloudFront-Viewer-Country": "US",
+      "content-type": "application/json",
+      "Host": "t7ip8r6gwl.execute-api.ap-southeast-2.amazonaws.com",
+      "square-environment": "Sandbox",
+      "square-initial-delivery-timestamp": "2020-02-05T00:27:01Z",
+      "square-version": "2020-01-22",
+      "User-Agent": "Square Connect v2",
+      "Via": "2.0 1b74ccf4cb51eacf97a0e6d60ae46a3f.cloudfront.net (CloudFront)",
+      "X-Amz-Cf-Id": "_F6gFkDVKzqPKle_41uiYNohRwED7zAaM6CTvG_JloOoIbKMEdt1FQ==",
+      "X-Amzn-Trace-Id": "Root=1-5e3a0bd5-066a9324d0d21e40c20665c3",
+      "X-Forwarded-For": "52.24.94.185, 64.252.141.160",
+      "X-Forwarded-Port": "443",
+      "X-Forwarded-Proto": "https",
+      "x-square-signature": "wVlJjErahxGQedldlQmfbf8C4ew="
+  },
+  "multiValueHeaders": {
+      "Accept-Encoding": [
+          "gzip"
+      ],
+      "CloudFront-Forwarded-Proto": [
+          "https"
+      ],
+      "CloudFront-Is-Desktop-Viewer": [
+          "true"
+      ],
+      "CloudFront-Is-Mobile-Viewer": [
+          "false"
+      ],
+      "CloudFront-Is-SmartTV-Viewer": [
+          "false"
+      ],
+      "CloudFront-Is-Tablet-Viewer": [
+          "false"
+      ],
+      "CloudFront-Viewer-Country": [
+          "US"
+      ],
+      "content-type": [
+          "application/json"
+      ],
+      "Host": [
+          "t7ip8r6gwl.execute-api.ap-southeast-2.amazonaws.com"
+      ],
+      "square-environment": [
+          "Sandbox"
+      ],
+      "square-initial-delivery-timestamp": [
+          "2020-02-05T00:27:01Z"
+      ],
+      "square-version": [
+          "2019-12-17"
+      ],
+      "User-Agent": [
+          "Square Connect v2"
+      ],
+      "Via": [
+          "2.0 1b74ccf4cb51eacf97a0e6d60ae46a3f.cloudfront.net (CloudFront)"
+      ],
+      "X-Amz-Cf-Id": [
+          "_F6gFkDVKzqPKle_41uiYNohRwED7zAaM6CTvG_JloOoIbKMEdt1FQ=="
+      ],
+      "X-Amzn-Trace-Id": [
+          "Root=1-5e3a0bd5-066a9324d0d21e40c20665c3"
+      ],
+      "X-Forwarded-For": [
+          "52.24.94.185, 64.252.141.160"
+      ],
+      "X-Forwarded-Port": [
+          "443"
+      ],
+      "X-Forwarded-Proto": [
+          "https"
+      ],
+      "x-square-signature": [
+          "wVlJjErahxGQedldlQmfbf8C4ew="
+      ]
+  },
+  "queryStringParameters": null,
+  "multiValueQueryStringParameters": null,
+  "pathParameters": null,
+  "stageVariables": null,
+  "requestContext": {
+      "resourceId": "u8srxurnyc",
+      "resourcePath": "/",
+      "httpMethod": "POST",
+      "extendedRequestId": "HZbJZEMZywMFfrw=",
+      "requestTime": "05/Feb/2020:00:27:01 +0000",
+      "path": "/dev/",
+      "accountId": "185976345635",
+      "protocol": "HTTP/1.1",
+      "stage": "dev",
+      "domainPrefix": "t7ip8r6gwl",
+      "requestTimeEpoch": 1580862421654,
+      "requestId": "464db0fa-be29-42bf-b5cc-391d2469ff33",
+      "identity": {
+          "cognitoIdentityPoolId": null,
+          "accountId": null,
+          "cognitoIdentityId": null,
+          "caller": null,
+          "sourceIp": "52.24.94.185",
+          "principalOrgId": null,
+          "accessKey": null,
+          "cognitoAuthenticationType": null,
+          "cognitoAuthenticationProvider": null,
+          "userArn": null,
+          "userAgent": "Square Connect v2",
+          "user": null
+      },
+      "domainName": "t7ip8r6gwl.execute-api.ap-southeast-2.amazonaws.com",
+      "apiId": "t7ip8r6gwl"
+  },
+  "body": "{\"merchant_id\":\"6SSW7HV8K2ST5\",\"type\":\"inventory.count.updated\",\"event_id\":\"df5f3813-a913-45a1-94e9-fdc3f7d5e3b6\",\"created_at\":\"2019-10-29T18:38:45.455006797Z\",\"data\":{\"type\":\"inventory\",\"id\":\"84e4ac73-d605-4dbd-a9e5-ffff794ddb9d\",\"object\":{\"inventory_counts\":[{\"calculated_at\":\"2019-10-29T18:38:45.10296Z\",\"catalog_object_id\":\"FGQ5JJWT2PYTHF35CKZ2DSKP\",\"catalog_object_type\":\"ITEM_VARIATION\",\"location_id\":\"2AT5JE54G329M\",\"quantity\":\"10\",\"state\":\"IN_STOCK\"}]}}}",
+  "isBase64Encoded": false
+}

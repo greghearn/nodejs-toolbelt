@@ -20,9 +20,13 @@
   "author": "Greg Hearn",
   "license": "MIT",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/greghearn/nodejs-toolbelt.git",
+    "type": "git",
+    "url": "https://github.com/greghearn/nodejs-toolbelt.git",
     "directory": "packages/squareup-authenticity-middyware"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "@middy/core": "^1.0.0-beta.8",
+    "@types/aws-lambda": "^8.10.46"
+  }
 }
