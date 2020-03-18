@@ -25,6 +25,21 @@ describe('when random numbers are required...', () => {
     expect(num).toBeGreaterThanOrEqual(0)
     expect(num).toBeLessThanOrEqual(100)
   })
+  test('a min & max number is null', () => {
+    const num = random.number(null, null)
+    expect(num).toBeGreaterThanOrEqual(0)
+    expect(num).toBeGreaterThanOrEqual(0)
+  })
+  test('a min & max is a really big number', () => {
+    const num = random.number((Number.MAX_SAFE_INTEGER + 1), (Number.MAX_SAFE_INTEGER + 1))
+    expect(num).toBeGreaterThanOrEqual(0)
+    expect(num).toBeGreaterThanOrEqual(0)
+  })
+  test('a min & max is less than 0', () => {
+    const num = random.number(-1, -1)
+    expect(num).toBeGreaterThanOrEqual(0)
+    expect(num).toBeGreaterThanOrEqual(0)
+  })
 })
 
 describe('when random strings are required...', () => {
