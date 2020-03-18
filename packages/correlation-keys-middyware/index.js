@@ -2,7 +2,7 @@
 
 const correlationKeys = require('@greghearn/correlation-keys')
 
-const eventSources = [
+const sources = [
   require('./event-source/api-gateway')
 ]
 
@@ -29,9 +29,9 @@ const correlationKeysMiddyware = (args) => {
     before: (handler, next) => {
       correlationKeys.clear()
       const { event } = handler
-      const matchedSource = eventSources.find(src => src.match(event))
-      if (matchedSource) {
-        matchedSource.capture(event, options)
+      const index = sources.findIndex(src => src.match(event))
+      if (index >= 0) {
+        sources[index].capture(event, options)
       }
       next()
     }

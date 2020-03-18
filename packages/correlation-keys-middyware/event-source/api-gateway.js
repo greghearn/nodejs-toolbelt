@@ -1,12 +1,17 @@
 'use strict'
 
 const uuidv4 = require('uuid').v4
-const utils = require('../utils')
 const correlationKeys = require('@greghearn/correlation-keys')
 const { CORRELATION_ID, DEBUG_ENABLED } = require('../constants')
 
 const match = function match (event) {
-  return utils.caseInsensitiveGet(event, 'httpMethod') !== undefined
+  try {
+    return Object.keys(event).findIndex(k =>
+      k.toLowerCase() === 'httpmethod'
+    ) >= 0
+  } catch {
+    return false
+  }
 }
 
 const capture = function capture (event, options) {
