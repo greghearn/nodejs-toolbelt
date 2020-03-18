@@ -24,6 +24,13 @@
       "name": "Debug package `squareup authenticity middyware`",
       "program": "${workspaceRoot}/node_modules/.bin/jest",
       "cwd": "${workspaceFolder}/packages/squareup-authenticity-middyware"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug package `accept message middyware`",
+      "program": "${workspaceRoot}/node_modules/.bin/jest",
+      "cwd": "${workspaceFolder}/packages/accept-message-middyware"
     }
   ]
 }

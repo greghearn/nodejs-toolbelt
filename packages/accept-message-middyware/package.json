@@ -1,0 +1,37 @@
+{
+  "name": "@greghearn/accept-message-middyware",
+  "version": "1.0.0",
+  "description": "Middy middleware module used to validate message event data via json schema related syntax",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --verbose --coverage",
+    "npm-publish-patch": "npm version patch && npm publish --access public",
+    "npm-publish-minor": "npm version minor && npm publish --access public",
+    "npm-publish-major": "npm version major && npm publish --access public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/greghearn/nodejs-toolbelt.git",
+    "directory": "packages/accept-message-middyware"
+  },
+  "keywords": [
+    "middy",
+    "middleware",
+    "json",
+    "schema",
+    "validate",
+    "accept",
+    "messages",
+    "lambda"
+  ],
+  "author": "Greg Hearn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/greghearn/nodejs-toolbelt/issues"
+  },
+  "homepage": "https://github.com/greghearn/nodejs-toolbelt#readme",
+  "devDependencies": {
+    "@middy/core": "^1.0.0-beta.8",
+    "@types/aws-lambda": "^8.10.46"
+  }
+}
