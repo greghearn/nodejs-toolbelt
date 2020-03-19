@@ -185,3 +185,18 @@ describe('when we replace the default prefix with a new prefix', () => {
     expect(correlation.has('x-org-x-correlation-id')).toEqual(true)
   })
 })
+describe('when we are retrieving all entries', () => {
+  beforeEach(() => {
+    keys.setPrefix('x-correlation-')
+    keys.clear()
+    keys.set('id', 'test')
+    keys.set('idempotency', 'abc123')
+  })
+  test('the object returned must match', () => {
+    const compare = {
+      'x-correlation-id': 'test',
+      'x-correlation-idempotency': 'abc123'
+    }
+    expect(keys.entries()).toEqual(compare)
+  })
+})
