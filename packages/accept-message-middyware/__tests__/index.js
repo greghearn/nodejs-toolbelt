@@ -56,3 +56,24 @@ describe('when event data supplied', () => {
     expect(error).toBe(undefined)
   })
 })
+describe('when api gateay event supplied with schema', () => {
+  const event = require('./events/api-gateway.json')
+  test('that is valid should have no error message', async () => {
+    const schema = {
+      required: ['body'],
+      properties: {
+        body: {
+          type: 'object',
+          properties: {
+            type: {
+              regexp: '/^inventory\\.count\\.updated$/i'
+            }
+          },
+          allRequired: true
+        }
+      }
+    }
+    const response = await invokeHandler(event, { schema: schema })
+    expect(response.error).toBe(undefined)
+  })
+})
