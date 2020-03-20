@@ -145,6 +145,28 @@ describe('When capture method invoked it should throw an error', () => {
       capture(event, { schema: schema })
     }).toThrowError(/invalid json string has been provided/i)
   })
+  test('if the body message doesnt match applied regexp', () => {
+    const event = {
+      body: '{ "hello": "world" }'
+    }
+    const schema = {
+      required: ['body'],
+      properties: {
+        body: {
+          type: 'object',
+          allRequired: true,
+          properties: {
+            hello: {
+              regexp: '/^word$/i'
+            }
+          }
+        }
+      }
+    }
+    expect(() => {
+      capture(event, { schema: schema })
+    }).toThrowError(/body.hello should pass/i)
+  })
   test('if a required property doesnt exist in the event object', () => {
     const event = {
       body: '{ "hello": "world" }'

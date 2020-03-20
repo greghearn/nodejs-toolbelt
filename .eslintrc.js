@@ -1,7 +1,6 @@
 module.exports = {
   env: {
     commonjs: true,
-    /*es6: true,*/
     jest: true
   },
   extends: [
@@ -12,8 +11,6 @@ module.exports = {
     'jest'
   ],
   parserOptions: {
-    /*ecmaVersion: 2018,*/
-    /*sourceType: "module",*/
     ecmaFeatures: {
         impliedStrict: true
     }
