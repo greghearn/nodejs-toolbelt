@@ -18,7 +18,7 @@ require('ajv-keywords')(ajv) // add all available keywords
  */
 const test = function validate (schema = {}, data = {}) {
   if (!ajv.validate(schema, data)) {
-    throw new TypeError(ajv.errorsText())
+    throw new Error(ajv.errorsText())
   }
 }
 

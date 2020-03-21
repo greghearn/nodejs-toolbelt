@@ -56,7 +56,7 @@ describe('when event data supplied', () => {
     expect(error).toBe(undefined)
   })
 })
-describe('when api gateay event supplied with schema', () => {
+describe('when api gateway event supplied with schema', () => {
   const event = require('./events/api-gateway.json')
   test('that is valid should have no error message', async () => {
     const schema = {
@@ -75,5 +75,23 @@ describe('when api gateay event supplied with schema', () => {
     }
     const response = await invokeHandler(event, { schema: schema })
     expect(response.error).toBe(undefined)
+  })
+  test('that an error exists when regexp dont match', async () => {
+    const schema = {
+      required: ['body'],
+      properties: {
+        body: {
+          type: 'object',
+          properties: {
+            type: {
+              regexp: '/^wrong.type.text$/i'
+            }
+          },
+          allRequired: true
+        }
+      }
+    }
+    const { error } = await invokeHandler(event, { schema: schema })
+    expect(error.message).toMatch(/body.type should pass/i)
   })
 })

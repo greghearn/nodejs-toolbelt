@@ -25,13 +25,7 @@ const capture = function capture (event = {}, options = {}) {
   const { schema = {} } = options
   const { body = {} } = event
 
-  try {
-    event.body = JSON.parse(body)
-  } catch {
-    throw new TypeError('Content-Type defined as application/json ' +
-    'but an invalid json string has been provided')
-  }
-
+  event.body = JSON.parse(body)
   ajv.test(schema, event)
   event.body = body
 }

@@ -143,11 +143,11 @@ describe('When capture method invoked it should throw an error', () => {
     }
     expect(() => {
       capture(event, { schema: schema })
-    }).toThrowError(/invalid json string has been provided/i)
+    }).toThrowError(/Unexpected token } in JSON/i)
   })
   test('if the body message doesnt match applied regexp', () => {
     const event = {
-      body: '{ "hello": "world" }'
+      body: '{ "type": "stock.count.updated" }'
     }
     const schema = {
       required: ['body'],
@@ -156,8 +156,8 @@ describe('When capture method invoked it should throw an error', () => {
           type: 'object',
           allRequired: true,
           properties: {
-            hello: {
-              regexp: '/^word$/i'
+            type: {
+              regexp: '/^inventory\\.count\\.updated$/i'
             }
           }
         }
@@ -165,7 +165,7 @@ describe('When capture method invoked it should throw an error', () => {
     }
     expect(() => {
       capture(event, { schema: schema })
-    }).toThrowError(/body.hello should pass/i)
+    }).toThrowError(/body.type should pass/i)
   })
   test('if a required property doesnt exist in the event object', () => {
     const event = {

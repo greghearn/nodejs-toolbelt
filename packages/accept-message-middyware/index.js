@@ -48,7 +48,7 @@ const acceptMessageMiddyware = (args) => {
       const { event } = handler
       const index = sources.findIndex(src => src.match(event))
       if (index < 0) {
-        throw new TypeError('Could not find a valid event source to process this incoming message')
+        throw new Error('Could not find a valid event source to process this incoming message')
       }
       sources[index].capture(event, options)
       next()
