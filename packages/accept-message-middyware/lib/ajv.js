@@ -1,7 +1,7 @@
 'use strict'
 
 const Ajv = require('ajv')
-const ajv = new Ajv()
+const ajv = new Ajv({ $data: true })
 require('ajv-keywords')(ajv) // add all available keywords
 
 /**

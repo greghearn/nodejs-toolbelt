@@ -20,7 +20,7 @@ const pattern = /Could not find a valid event source/i
  * @param {*} event
  * @param {*} options
  */
-const invokeHandler = async (event, options) => {
+const invokeHandler = (event, options) => {
   const handler = middy((event, context, callback) => {
     callback(null, {})
   })
@@ -64,12 +64,12 @@ describe('when api gateway event supplied with schema', () => {
       properties: {
         body: {
           type: 'object',
+          required: ['type'],
           properties: {
             type: {
               regexp: '/^inventory\\.count\\.updated$/i'
             }
-          },
-          allRequired: true
+          }
         }
       }
     }
@@ -82,12 +82,12 @@ describe('when api gateway event supplied with schema', () => {
       properties: {
         body: {
           type: 'object',
+          required: ['type'],
           properties: {
             type: {
               regexp: '/^wrong.type.text$/i'
             }
-          },
-          allRequired: true
+          }
         }
       }
     }
