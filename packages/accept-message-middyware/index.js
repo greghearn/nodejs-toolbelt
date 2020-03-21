@@ -42,19 +42,6 @@ const findModuleIndex = function findModuleIndex (event = {}) {
  * 2. No response error message populated if message
  *    is valid based on the user supplied schema
  *
- * Schema:
- * Applying a schema to validate the incoming message.
- * 1. If the schema can validate the message then no
- *    response error message is populated and the
- *    handler middleware continues as normal.
- * 2. If the schema can not validate the message then
- *    this middleware handles the error and creates a
- *    response, the execution is still propagated to
- *    all the other error middlewares and they have a
- *    chance to update or replace the response as needed.
- *    At the end of the error middlewares sequence, the
- *    response is returned to the user.
- *
  * @param {*} args
  */
 const acceptMessageMiddyware = (args) => {
