@@ -7,11 +7,9 @@ Finally at the end of the sequence, the response is returned to the user.
 This module automatically works out what AWS Lambda event source was invoked by looking at the message event payload. Currently this module only supports requests from API Gateway with a Content-Type of application/json but more will come soon.
 
 This module depends on the use of [ajv](https://www.npmjs.com/package/ajv) under the hood for schema related validation & the [middy](https://www.npmjs.com/package/middy) framework for the middleware engine.
+Install dependancy framework [middy](https://www.npmjs.com/package/middy) for wrapping your handler in middy.
 
 ## Getting started
-
-Install middy framework [middy](https://www.npmjs.com/package/middy) for wrapping your handler in middy.
-
 
 ```bash
 npm install @greghearn/accept-message-middyware
@@ -23,7 +21,7 @@ npm install @greghearn/accept-message-middyware
 const acceptMessageMiddyware = require('@greghearn/accept-message-middyware')
 
 *** EXAMPLE PAYLOAD ***
-// example of the incoming event message payload
+// example of an incoming event message payload
 {
   "httpMethod": "POST",
   "headers": {
@@ -34,10 +32,11 @@ const acceptMessageMiddyware = require('@greghearn/accept-message-middyware')
 
 *** YOUR CODE ***
 /**
- * Setup a schema relating to you incoming data for validating.
+ * Setup a schema relating to your incoming data for validating.
  * All we are doing here is saying that the body property must 
- * have 3 required fields  in the payload and the `type` property
- * must be valid based on the supplied regular expression.
+ * have 3 required fields in the payload and a regular expression 
+ * is to be matched on the `type` properties value. If the
+ * message payloads matches this then we have a valid message.
  */
 const schema = {
   required: ['body'],
