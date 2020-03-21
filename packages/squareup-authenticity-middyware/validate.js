@@ -1,7 +1,24 @@
 'use strict'
 
-const utils = require('./utils')
 const crypto = require('crypto')
+
+/** Returns object[matchKey] for a case-insensitive matchKey.
+ *
+ * Should be used to look up header params, since HTTP/2 requires lowercase
+ * headers but some old HTTP/1 services may return any capitalization scheme.
+ *
+ * Usage:
+ *   responseHeaders = {
+ *     sOmE-HeAdEr: 'value'
+ *   }
+ *   utils.caseInsensitiveGet(responseHeaders, 'some-header') // returns 'value'.
+ */
+const caseInsensitiveGet = function caseInsensitiveGet (object, matchKey) {
+  const objectKey = Object.keys(object).find(
+    (key) => key.toLowerCase() === matchKey.toLowerCase()
+  )
+  return object[objectKey]
+}
 
 const authenticity = function authenticity (event, signatureKey) {
   const { headers } = event
@@ -9,7 +26,7 @@ const authenticity = function authenticity (event, signatureKey) {
     return false
   }
   // capture the square signature value from the header if one exists
-  const signature = utils.caseInsensitiveGet(headers, 'x-square-signature')
+  const signature = caseInsensitiveGet(headers, 'x-square-signature')
   // check to see we have received a value for the signature otherwise we can
   // just finish here and return false
   if (signature === undefined) {
@@ -22,8 +39,8 @@ const authenticity = function authenticity (event, signatureKey) {
   if (!requestContext) {
     return false
   }
-  const host = utils.caseInsensitiveGet(requestContext, 'domainName')
-  const path = utils.caseInsensitiveGet(requestContext, 'path')
+  const host = caseInsensitiveGet(requestContext, 'domainName')
+  const path = caseInsensitiveGet(requestContext, 'path')
   if (host === undefined || path === undefined) {
     return false
   }
