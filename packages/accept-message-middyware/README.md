@@ -59,7 +59,7 @@ const schema = {
  * comes in will yeild a successful result.
  */
 module.exports.handler = middy((event, context, callback) => { /* ... */ })
-  .use(acceptMessageMiddleware({ schema: schema }))
+  .use(acceptMessageMiddyware({ schema: schema }))
 
 ```
 
