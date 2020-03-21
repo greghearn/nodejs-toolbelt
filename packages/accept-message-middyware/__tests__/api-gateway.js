@@ -207,4 +207,23 @@ describe('When capture method invoked it should pass', () => {
     }).not.toThrow()
     expect(event.body).toBe(message)
   })
+  test('message body should be successfull if the message is a valid object', () => {
+    const message = JSON.parse('{ "hello": "world" }')
+    const event = {
+      body: message
+    }
+    const options = {
+      schema: {
+        required: ['body'],
+        properties: {
+          body: {
+            type: 'object'
+          }
+        }
+      }
+    }
+    expect(() => {
+      capture(event, options)
+    }).not.toThrow()
+  })
 })

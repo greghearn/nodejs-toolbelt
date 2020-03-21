@@ -25,7 +25,9 @@ const capture = function capture (event = {}, options = {}) {
   const { schema = {} } = options
   const { body = {} } = event
 
-  event.body = JSON.parse(body)
+  if (typeof body === 'string') {
+    event.body = JSON.parse(body)
+  }
   ajv.test(schema, event)
   event.body = body
 }
