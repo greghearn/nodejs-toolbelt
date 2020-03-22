@@ -35,7 +35,7 @@ const signatureKey = 'rBnSB9miw_dN-4ZA0hrQ5w'
  * @param {*} event
  * @param {*} options
  */
-const invokeHandler = async (event, options) => {
+const invokeHandler = (event, options) => {
   const handler = middy((event, context, callback) => {
     callback(null, {})
   })
@@ -44,6 +44,22 @@ const invokeHandler = async (event, options) => {
 }
 
 describe('when validating a supplied siganture', () => {
+  test('example from README file', async () => {
+    const event = {
+      httpMethod: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-square-signature': 'xr7qpklzMoKXJT6qIawAha6OCuA='
+      },
+      requestContext: {
+        path: '/dev/',
+        domainName: 't7ip8r6gwl.execute-api.ap-southeast-2.amazonaws.com'
+      },
+      body: '{"merchant_id":"6SSW7HV8K2ST5","type":"inventory.count.updated","event_id":"df5f3813-a913-45a1-94e9-fdc3f7d5e3b6"}'
+    }
+    const response = await invokeHandler(event, { signatureKey: 'rBnSB9miw_dN-4ZA0hrQ5w' })
+    expect(response).toEqual({})
+  })
   test('if signature key is correct then no response error', async () => {
     const response = await invokeHandler(event, { signatureKey: signatureKey })
     expect(response).toEqual({})
