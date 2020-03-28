@@ -54,7 +54,7 @@ const schema = {
 }
 /**
  * applying this schema when the above example payload message 
- * comes in will yeild a successful result.
+ * comes in will yield a successful result.
  */
 module.exports.handler = middy((event, context, callback) => { /* ... */ })
   .use(acceptMessageMiddyware({ schema: schema }))

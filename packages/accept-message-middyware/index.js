@@ -61,6 +61,7 @@ const acceptMessageMiddyware = (args) => {
       handler.response = {
         error: handler.error
       }
+      console.error(handler.error)
       next()
     }
   })

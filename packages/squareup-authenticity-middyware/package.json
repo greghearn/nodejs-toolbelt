@@ -1,6 +1,6 @@
 {
   "name": "@greghearn/squareup-authenticity-middyware",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Middy middleware module used to validate a webhook events source authenticity",
   "main": "index.js",
   "scripts": {

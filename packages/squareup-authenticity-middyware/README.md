@@ -46,7 +46,7 @@ const squareupAuthenticityMiddyware = require('@greghearn/squareup-authenticity-
 *** YOUR CODE ***
 /**
  * applying this signature key when the above example payload message 
- * comes in will yeild a successful result.
+ * comes in will yield a successful result.
  */
 module.exports.handler = middy((event, context, callback) => { /* ... */ })
   .use(squareupAuthenticityMiddyware({ 
