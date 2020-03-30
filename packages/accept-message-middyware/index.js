@@ -46,7 +46,8 @@ const findModuleIndex = function findModuleIndex (event = {}) {
  */
 const acceptMessageMiddyware = (args) => {
   const defaults = {
-    schema: {}
+    schema: {},
+    debug: false
   }
   const options = Object.assign({}, defaults, args)
 
@@ -58,10 +59,11 @@ const acceptMessageMiddyware = (args) => {
       next()
     },
     onError: (handler, next) => {
+      if (options.debug) console.error(handler.error)
       handler.response = {
-        error: handler.error
+        statusCode: 400,
+        body: handler.error.message
       }
-      console.error(handler.error)
       next()
     }
   })

@@ -30,30 +30,30 @@ const invokeHandler = (event, options) => {
 
 describe('when event data supplied', () => {
   test('is empty then error exists in response', async () => {
-    const { error } = await invokeHandler({}, {})
-    expect(pattern.test(error.message)).toEqual(true)
+    const response = await invokeHandler({}, {})
+    expect(pattern.test(response.body)).toEqual(true)
   })
   test('is an empty object then error exists in response', async () => {
-    const { error } = await invokeHandler(Object.create(null), {})
-    expect(pattern.test(error.message)).toEqual(true)
+    const response = await invokeHandler(Object.create(null), {})
+    expect(pattern.test(response.body)).toEqual(true)
   })
   test('is an NaN then error exists in response', async () => {
-    const { error } = await invokeHandler(NaN, {})
-    expect(pattern.test(error.message)).toEqual(true)
+    const response = await invokeHandler(NaN, {})
+    expect(pattern.test(response.body)).toEqual(true)
   })
   test('is an -1 then error exists in response', async () => {
-    const { error } = await invokeHandler(-1, {})
-    expect(pattern.test(error.message)).toEqual(true)
+    const response = await invokeHandler(-1, {})
+    expect(pattern.test(response.body)).toEqual(true)
   })
   test('that is valid api-gateway event then no error in response', async () => {
     const event = require('./events/api-gateway.json')
-    const { error } = await invokeHandler(event, {})
-    expect(error).toBe(undefined)
+    const response = await invokeHandler(event, {})
+    expect(response.body).toBe(undefined)
   })
   test('that is valid sns event then no error in response', async () => {
     const event = require('./events/sns.json')
-    const { error } = await invokeHandler(event, {})
-    expect(error).toBe(undefined)
+    const response = await invokeHandler(event, {})
+    expect(response.body).toBe(undefined)
   })
 })
 describe('when api gateway event supplied with schema', () => {
@@ -91,7 +91,7 @@ describe('when api gateway event supplied with schema', () => {
         }
       }
     }
-    const { error } = await invokeHandler(event, { schema: schema })
-    expect(error.message).toMatch(/body.type should pass/i)
+    const response = await invokeHandler(event, { schema: schema })
+    expect(response.body).toMatch(/body.type should pass/i)
   })
 })

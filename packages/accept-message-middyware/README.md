@@ -1,7 +1,7 @@
 # nodejs-toolbelt package accept-message-middyware
 This module is a validation middleware wrapper providing a way for applying a schema to validate an incoming message leaving the developer to concentrate on implementing the main handlers business logic requirements.
 If the schema can validate the message then no error response message is populated at the middleware level and the handler continues as normal.
-If the schema cant validate the message then this middleware handles the error and adds the error message to the response, the execution is propagated to all the other middlewares if others exist and they have a chance to update or replace the response as needed. 
+If the schema cant validate the message then this middleware handles the error and adds the error message to the response with a status code of 400 [BAD REQUEST], the execution is propagated to all the other middlewares if others exist and they have a chance to update or replace the response as needed. 
 Finally at the end of the sequence, the response is returned to the user.
 
 This module automatically works out what AWS Lambda event source was invoked by looking at the message event payload. Currently this module only supports requests from API Gateway with a Content-Type of application/json but more will come soon.

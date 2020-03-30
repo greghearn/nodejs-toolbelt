@@ -1,6 +1,6 @@
 {
   "name": "@greghearn/accept-message-middyware",
-  "version": "1.3.4",
+  "version": "1.4.0",
   "description": "Middy middleware module used to validate message event data via json schema related syntax",
   "main": "index.js",
   "scripts": {

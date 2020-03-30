@@ -26,7 +26,6 @@ const match = function match (event) {
 }
 
 const capture = function capture (event, options) {
-  console.log('SNS Capture called')
 }
 
 module.exports = {
