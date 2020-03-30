@@ -9,7 +9,8 @@ const validate = require('./validate')
  */
 const squareupAuthenticityMiddyware = (args) => {
   const defaults = {
-    signatureKey: ''
+    signatureKey: '',
+    debug: false
   }
   const options = Object.assign({}, defaults, args)
 
@@ -27,10 +28,11 @@ const squareupAuthenticityMiddyware = (args) => {
       next()
     },
     onError: (handler, next) => {
+      if (options.debug) console.error(handler.error)
       handler.response = {
-        error: handler.error
+        statusCode: 400,
+        body: handler.error.message
       }
-      console.error(handler.error)
       next()
     }
   })
