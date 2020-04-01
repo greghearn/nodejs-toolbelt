@@ -1,6 +1,7 @@
 'use strict'
 
 const ajv = require('../lib/ajv')
+const util = require('../lib/util')
 
 const REGEXP = {
   HTTP_METHOD: /^GET$|^HEAD$|^POST$|^PUT$|^DELETE$|^CONNECT$|^OPTIONS$|^TRACE$|^PATCH$/i,
@@ -25,11 +26,9 @@ const capture = function capture (event = {}, options = {}) {
   const { schema = {} } = options
   const { body = {} } = event
 
-  if (typeof body === 'string') {
-    event.body = JSON.parse(body)
-  }
+  event.body = util.json.parse(body)
   ajv.test(schema, event)
-  event.body = body
+  // event.body = body
 }
 
 module.exports = {

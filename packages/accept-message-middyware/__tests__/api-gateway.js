@@ -143,7 +143,7 @@ describe('When capture method invoked it should throw an error', () => {
     }
     expect(() => {
       capture(event, { schema: schema })
-    }).toThrowError(/Unexpected token } in JSON/i)
+    }).toThrowError(/data.body should be object/i)
   })
   test('if the body message doesnt match applied regexp', () => {
     const event = {
@@ -187,8 +187,8 @@ describe('When capture method invoked it should pass', () => {
       capture(event, options)
     }).not.toThrow()
   })
-  test('message body should remain unchanged when validating the body as an object', () => {
-    const message = '{ "hello": "world" }'
+  test('message body should be transformed when validating the body as an object', () => {
+    const message = '{"hello": "world"}'
     const event = {
       body: message
     }
@@ -205,7 +205,7 @@ describe('When capture method invoked it should pass', () => {
     expect(() => {
       capture(event, options)
     }).not.toThrow()
-    expect(event.body).toBe(message)
+    expect(event.body).toStrictEqual(JSON.parse(message))
   })
   test('message body should be successfull if the message is a valid object', () => {
     const message = JSON.parse('{ "hello": "world" }')
