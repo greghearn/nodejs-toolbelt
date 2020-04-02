@@ -28,7 +28,8 @@ const capture = function capture (event = {}, options = {}) {
 
   event.body = util.json.parse(body)
   ajv.test(schema, event)
-  // event.body = body
+
+  if (!options.convert) event.body = body
 }
 
 module.exports = {

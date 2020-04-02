@@ -200,7 +200,8 @@ describe('When capture method invoked it should pass', () => {
             type: 'object'
           }
         }
-      }
+      },
+      convert: true
     }
     expect(() => {
       capture(event, options)

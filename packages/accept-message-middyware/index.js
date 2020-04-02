@@ -47,7 +47,8 @@ const findModuleIndex = function findModuleIndex (event = {}) {
 const acceptMessageMiddyware = (args) => {
   const defaults = {
     schema: {},
-    debug: false
+    debug: false,
+    convert: false
   }
   const options = Object.assign({}, defaults, args)
 
