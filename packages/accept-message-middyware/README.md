@@ -10,7 +10,7 @@ A configuration option exists to turn the message data transformation off if req
 ## Event source types
 Currently this module supports the following lambda event sources:
 - 1. HTTP: Any requests with a header Content-Type of application/json will workk IE: Amazon API Gateway.
-- 2. Amazon Simple Notification Service: Requests with an array of type Records.
+- 2. AWS Lambda with Amazon Simple Notification Service with an array of type Records.
 
 This module depends on the use of [ajv](https://www.npmjs.com/package/ajv) under the hood for schema related validation & the [middy](https://www.npmjs.com/package/middy) framework for the middleware engine.
 Install dependancy framework [middy](https://www.npmjs.com/package/middy) for wrapping your handler in middy.
