@@ -1,5 +1,5 @@
-# nodejs-toolbelt package accept-message-middyware
-This module is a event validation & message transforming middleware wrapper providing a way for applying a schema to validate an incoming message whilst automatically converting any message data (based on the event type) to an object leaving the developer to concentrate on implementing their main handlers business logic requirements.
+# nodejs-toolbelt package accept-message-middyware for aws lambda functions
+This module is a aws lambda event validation & message transforming middleware wrapper providing a way for applying a schema to validate an incoming message whilst automatically converting any message data to an object leaving the developer to concentrate on implementing their main handlers business logic requirements.
 If the schema can validate the message then no error response message is populated at the middleware level and the handler continues as normal.
 If the schema cant validate the message then this middleware handles the error and adds the error message to the response with a status code of 400 [BAD REQUEST], the execution is propagated to all the other middlewares if others exist and they have a chance to update or replace the response as needed. 
 Finally at the end of the sequence, the response is returned to the user.
@@ -7,7 +7,10 @@ Finally at the end of the sequence, the response is returned to the user.
 This module automatically works out what AWS Lambda event source was invoked by looking at the message event payload before validating the event and transforming the message data to an object if required.
 A configuration option exists to turn the message data transformation off if required.
 
-Currently this module only supports requests from API Gateway with a Content-Type of application/json but more will come soon.
+## Event source types
+Currently this module supports the following lambda event sources:
+- 1. HTTP: Any requests with a header Content-Type of application/json will workk IE: Amazon API Gateway.
+- 2. Amazon Simple Notification Service: Requests with an array of type Records.
 
 This module depends on the use of [ajv](https://www.npmjs.com/package/ajv) under the hood for schema related validation & the [middy](https://www.npmjs.com/package/middy) framework for the middleware engine.
 Install dependancy framework [middy](https://www.npmjs.com/package/middy) for wrapping your handler in middy.
