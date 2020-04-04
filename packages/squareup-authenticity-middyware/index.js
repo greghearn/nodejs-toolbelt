@@ -29,11 +29,7 @@ const squareupAuthenticityMiddyware = (args) => {
     },
     onError: (handler, next) => {
       if (options.debug) console.error(handler.error)
-      handler.response = {
-        statusCode: 400,
-        body: handler.error.message
-      }
-      next()
+      next(handler.error)
     }
   })
 }

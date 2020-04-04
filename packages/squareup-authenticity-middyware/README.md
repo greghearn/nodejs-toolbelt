@@ -8,7 +8,7 @@ All v2 Webhooks notifications from Square include an X-Square-Signature header. 
 Your `Signature Key` assigned in your Square Developer Portal will be used to compare the webhook signature key to the key provided in the notification payload using the X-Square-Signature header value. More information relating to squareups webook events can be found here [webhooks](https://developer.squareup.com/docs/webhooks-overview)
 
 If your `Signature Key` can validate the incoming message then no error response is populated at the middleware level and the handler continues as normal.
-If your `Signature Key` cant validate the message then this middleware handles the error and adds an error message to the response with a status code of 400 [BAD REQUEST], the execution is propagated to all the other middlewares if others exist and they have a chance to update or replace the response as needed. 
+If your `Signature Key` cant validate the message then this middleware handles the error and adds an error message to the response, the execution is propagated to all the other middlewares if others exist and they have a chance to update or replace the response as needed. 
 Finally at the end of the sequence, the response is returned to the user.
 
 ## What you will need.

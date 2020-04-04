@@ -16,10 +16,9 @@ const event = require('./event.json')
 
 /**
  * Purpose:
- *  Supply a regular expression pattern for use when errors
- *  exist in the test suite.
+ *  Supply a message for use when errors exist in the test suite.
  */
-const pattern = /Could not validate the authenticity/i
+const authenticityError = 'Could not validate the authenticity'
 
 /**
  * Purpose:
@@ -65,14 +64,15 @@ describe('when validating a supplied siganture', () => {
     expect(response).toEqual({})
   })
   test('if signature key is wrong then authenticity response error exists', async () => {
-    const response = await invokeHandler(event, { signatureKey: 'fake key' })
-    expect(pattern.test(response.body)).toEqual(true)
+    await expect(invokeHandler(event, {
+      signatureKey: 'fake key'
+    })).rejects.toThrow(authenticityError)
   })
 })
 describe('when validating `event` parameter', () => {
   test('if empty object then authenticity response error', async () => {
-    const response = await invokeHandler({}, {})
-    expect(pattern.test(response.body)).toEqual(true)
+    await expect(invokeHandler({}, {}))
+      .rejects.toThrow(authenticityError)
   })
 })
 describe('when validating `header` metadata field', () => {
@@ -80,22 +80,22 @@ describe('when validating `header` metadata field', () => {
     let copy = Object.assign({}, event)
     copy.headers = undefined
     copy = JSON.parse(JSON.stringify(copy))
-    const response = await invokeHandler(copy, {})
-    expect(pattern.test(response.body)).toEqual(true)
+    await expect(invokeHandler(copy, {}))
+      .rejects.toThrow(authenticityError)
   })
   test('if `x-square-signature` does not exist then authenticity response error', async () => {
     let copy = Object.assign({}, event)
     copy.headers['x-square-signature'] = undefined
     copy = JSON.parse(JSON.stringify(copy))
-    const response = await invokeHandler(copy, {})
-    expect(pattern.test(response.body)).toEqual(true)
+    await expect(invokeHandler(copy, {}))
+      .rejects.toThrow(authenticityError)
   })
   test('if `x-square-signature` value empty then authenticity response error', async () => {
     let copy = Object.assign({}, event)
     copy.headers['x-square-signature'] = ''
     copy = JSON.parse(JSON.stringify(copy))
-    const response = await invokeHandler(copy, {})
-    expect(pattern.test(response.body)).toEqual(true)
+    await expect(invokeHandler(copy, {}))
+      .rejects.toThrow(authenticityError)
   })
 })
 describe('when validating `requestContext` metadata field', () => {
@@ -103,36 +103,36 @@ describe('when validating `requestContext` metadata field', () => {
     let copy = Object.assign({}, event)
     delete copy.requestContext
     copy = JSON.parse(JSON.stringify(copy))
-    const response = await invokeHandler(copy, {})
-    expect(pattern.test(response.body)).toEqual(true)
+    await expect(invokeHandler(copy, {}))
+      .rejects.toThrow(authenticityError)
   })
   test('if `domainName` field does not exist then test for authenticity response error', async () => {
     let copy = Object.assign({}, event)
     delete copy.requestContext.domainName
     copy = JSON.parse(JSON.stringify(copy))
-    const response = await invokeHandler(copy, {})
-    expect(pattern.test(response.body)).toEqual(true)
+    await expect(invokeHandler(copy, {}))
+      .rejects.toThrow(authenticityError)
   })
   test('if `domainName` fields value is empty then test for authenticity response error', async () => {
     let copy = Object.assign({}, event)
     copy.requestContext.domainName = ''
     copy = JSON.parse(JSON.stringify(copy))
-    const response = await invokeHandler(copy, {})
-    expect(pattern.test(response.body)).toEqual(true)
+    await expect(invokeHandler(copy, {}))
+      .rejects.toThrow(authenticityError)
   })
   test('if `path` field does not exist then test for authenticity response error', async () => {
     let copy = Object.assign({}, event)
     delete copy.requestContext.path
     copy = JSON.parse(JSON.stringify(copy))
-    const response = await invokeHandler(copy, {})
-    expect(pattern.test(response.body)).toEqual(true)
+    await expect(invokeHandler(copy, {}))
+      .rejects.toThrow(authenticityError)
   })
   test('if `path` fields value is empty then test for authenticity response error', async () => {
     let copy = Object.assign({}, event)
     copy.requestContext.path = ''
     copy = JSON.parse(JSON.stringify(copy))
-    const response = await invokeHandler(copy, {})
-    expect(pattern.test(response.body)).toEqual(true)
+    await expect(invokeHandler(copy, {}))
+      .rejects.toThrow(authenticityError)
   })
 })
 describe('when validating `body` field', () => {
@@ -140,14 +140,14 @@ describe('when validating `body` field', () => {
     let copy = Object.assign({}, event)
     delete copy.body
     copy = JSON.parse(JSON.stringify(copy))
-    const response = await invokeHandler(copy, {})
-    expect(pattern.test(response.body)).toEqual(true)
+    await expect(invokeHandler(copy, {}))
+      .rejects.toThrow(authenticityError)
   })
   test('if body is empty then authenticity response error', async () => {
     let copy = Object.assign({}, event)
     copy.body = ''
     copy = JSON.parse(JSON.stringify(copy))
-    const response = await invokeHandler(copy, {})
-    expect(pattern.test(response.body)).toEqual(true)
+    await expect(invokeHandler(copy, {}))
+      .rejects.toThrow(authenticityError)
   })
 })
