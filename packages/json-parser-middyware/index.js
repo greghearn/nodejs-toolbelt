@@ -1,5 +1,16 @@
 'use strict'
 
+const _get = require('lodash.get')
+const _set = require('lodash.set')
+
+const get = function get (event, path) {
+  return _get(event, path)
+}
+
+const parse = function parse (string) {
+  return JSON.parse(string)
+}
+
 /**
  * Purpose:
  *
@@ -7,7 +18,7 @@
  */
 const jsonParserMiddyware = (args) => {
   const defaults = {
-    paths: [],
+    path: [],
     debug: false,
     silent: true
   }
@@ -16,6 +27,23 @@ const jsonParserMiddyware = (args) => {
   return ({
     before: (handler, next) => {
       const { event } = handler
+      if (typeof options.path === 'string') options.path = [options.path]
+      if (Array.isArray(options.path)) {
+        const len = options.path.length
+        for (var index = 0; index < len; index += 1) {
+          const value = get(event, options.path[index])
+          if (!value && !options.silent) {
+            throw new Error(`${options.path[index]} property not found`)
+          }
+          if (value) {
+            try {
+              _set(event, options.path[index], parse(value))
+            } catch {
+              throw new Error(`${options.path[index]} property value is not in json format`)
+            }
+          }
+        }
+      }
       next()
     },
     after: (handler, next) => {
