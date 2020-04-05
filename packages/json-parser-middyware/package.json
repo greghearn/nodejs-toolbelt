@@ -1,0 +1,34 @@
+{
+  "name": "@greghearn/json-parser-middyware",
+  "version": "1.0.0",
+  "description": "Middy middleware module used to convert a json string to an object via object path notation",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --verbose --coverage",
+    "npm-publish-patch": "npm version patch && npm publish --access public",
+    "npm-publish-minor": "npm version minor && npm publish --access public",
+    "npm-publish-major": "npm version major && npm publish --access public"
+  },
+  "keywords": [
+    "middy",
+    "middleware",
+    "json",
+    "parse",
+    "http",
+    "amazon",
+    "aws",
+    "node"
+  ],
+  "author": "Greg Hearn",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/greghearn/nodejs-toolbelt.git",
+    "directory": "packages/json-parser-middyware"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@middy/core": "^1.0.0-beta.8",
+    "@types/aws-lambda": "^8.10.46"
+  }
+}
