@@ -1,112 +1,7 @@
 'use strict'
 
-const { match, capture } = require('../event-source/api-gateway')
+const capture = require('../capture')
 
-describe('when matching an event and the event', () => {
-  test('is empty then should return false', async () => {
-    expect(match({})).toEqual(false)
-  })
-  test('is an empty object should return false', async () => {
-    expect(match({})).toEqual(false)
-  })
-  test('is null should return false', async () => {
-    expect(match(null)).toEqual(false)
-  })
-  test('is undefined should return false', async () => {
-    expect(match(undefined)).toEqual(false)
-  })
-  test('to match = `httpsMethod` should return false', async () => {
-    const event = {
-      httpsMethod: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      }
-    }
-    expect(match(event)).toEqual(false)
-  })
-  test('to match = `httpsMethods` should return false', async () => {
-    const event = {
-      httpsMethods: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      }
-    }
-    expect(match(event)).toEqual(false)
-  })
-  test('to match = `httpMethods` should return false', async () => {
-    const event = {
-      httpMethods: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      }
-    }
-    expect(match(event)).toEqual(false)
-  })
-  test('to match = ` httpMethod ` should return false', async () => {
-    const event = {
-      ' httpMethod ': 'POST',
-      headers: {
-        'content-type': 'application/json'
-      }
-    }
-    expect(match(event)).toEqual(false)
-  })
-  test('to match = `httpMethod` should return true', async () => {
-    const event = {
-      httpMethod: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      }
-    }
-    expect(match(event)).toEqual(true)
-  })
-})
-describe('when checking the headers content-type', () => {
-  test('should return true if content-type exists and equals application/json', async () => {
-    const event = {
-      httpMethod: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      }
-    }
-    expect(match(event)).toEqual(true)
-  })
-  test('should return false if content-type doesnt exist', async () => {
-    const event = {
-      httpMethod: 'POST',
-      headers: {
-      }
-    }
-    expect(match(event)).toEqual(false)
-  })
-  test('should return false if content-type doesnt equal application/json', async () => {
-    const event = {
-      httpMethod: 'POST',
-      headers: {
-        'content-type': 'text/html'
-      }
-    }
-    expect(match(event)).toEqual(false)
-  })
-  test('should return true if Content-Type is camel case and equals application/json', async () => {
-    const event = {
-      httpMethod: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-    expect(match(event)).toEqual(true)
-  })
-  test('should return false if Content-Type is camel case but doesnt equal application/json', async () => {
-    const event = {
-      httpMethod: 'POST',
-      headers: {
-        'Content-Type': 'application/xml'
-      }
-    }
-    expect(match(event)).toEqual(false)
-  })
-})
 describe('When capture method invoked it should throw an error', () => {
   test('if schema and event null', () => {
     expect(() => {
@@ -147,7 +42,7 @@ describe('When capture method invoked it should throw an error', () => {
   })
   test('if the body message doesnt match applied regexp', () => {
     const event = {
-      body: '{ "type": "stock.count.updated" }'
+      body: { type: 'stock.count.updated' }
     }
     const schema = {
       required: ['body'],
@@ -186,27 +81,6 @@ describe('When capture method invoked it should pass', () => {
     expect(() => {
       capture(event, options)
     }).not.toThrow()
-  })
-  test('message body should be transformed when validating the body as an object', () => {
-    const message = '{"hello": "world"}'
-    const event = {
-      body: message
-    }
-    const options = {
-      schema: {
-        required: ['body'],
-        properties: {
-          body: {
-            type: 'object'
-          }
-        }
-      },
-      convert: true
-    }
-    expect(() => {
-      capture(event, options)
-    }).not.toThrow()
-    expect(event.body).toStrictEqual(JSON.parse(message))
   })
   test('message body should be successfull if the message is a valid object', () => {
     const message = JSON.parse('{ "hello": "world" }')
