@@ -1,0 +1,31 @@
+{
+  "Records": [
+      {
+          "EventSource": "aws:sns",
+          "EventVersion": "1.0",
+          "EventSubscriptionArn": "arn:aws:sns:ap-southeast-2:185976345635:cf-webhook:c9393a55-766c-42b2-bd02-3335fe3dc4ed",
+          "Sns": {
+              "Type": "Notification",
+              "MessageId": "98a0ee56-d2c1-5f5a-b24d-b8ab21da6222",
+              "TopicArn": "arn:aws:sns:ap-southeast-2:185976345635:cf-webhook",
+              "Subject": null,
+              "Message": "{\"info\":\"payment.created\",\"data\":{\"amount_money\":{\"amount\":1150,\"currency\":\"AUD\"},\"card_details\":{\"application_cryptogram\":\"dbef9cee58b07da5\",\"application_identifier\":\"A0000000031010\",\"application_name\":\"Visa Debit\",\"auth_result_code\":\"963478\",\"avs_status\":\"AVS_NOT_CHECKED\",\"card\":{\"bin\":\"462239\",\"card_brand\":\"VISA\",\"card_type\":\"DEBIT\",\"cardholder_name\":\" /\",\"exp_month\":2,\"exp_year\":2024,\"fingerprint\":\"sq-1-HXBDXR_nIC5zROsbWMVSjPkDjPldgux_U23YMcdTJgIySeSye4La2o2qOQQW7Tgaeg\",\"last_4\":\"6035\",\"prepaid_type\":\"NOT_PREPAID\"},\"cvv_status\":\"CVV_NOT_CHECKED\",\"device_details\":{\"device_id\":\"DEVICE_INSTALLATION_ID:7D6BE98B-9A68-4FAA-A16C-67C1A3A626E1\",\"device_name\":\"iPad\"},\"entry_method\":\"CONTACTLESS\",\"statement_description\":\"SQ *CRUISIN FOODIES\",\"status\":\"AUTHORIZED\"},\"created_at\":\"2020-04-01T01:39:35.300Z\",\"id\":\"rrRzcWVz8cWXbbLMkNtPCkXmvaB\",\"location_id\":\"2AT5JE54G329M\",\"order_id\":\"tYsTDCGXRX3XuWHspMk3EDkeV\",\"receipt_number\":\"rrRz\",\"source_type\":\"CARD\",\"status\":\"APPROVED\",\"total_money\":{\"amount\":1150,\"currency\":\"AUD\"},\"updated_at\":\"2020-04-01T01:39:36.232Z\",\"version\":1}}",
+              "Timestamp": "2020-04-01T01:39:39.179Z",
+              "SignatureVersion": "1",
+              "Signature": "n4cRlar4tovfqXEaSS850V3ForZSmRlUMhI0EZpn00W8JKRqyLuxnPEHoG7Ze75zZw5RQWRK2OLHTl97JQZ94YKlS8FSlljw5KHWGyYduKNgRg2f0DmlvGkTIy29taL8MO9zAHtSBrE1pSBLtygqgGIYuCKhrNv/b/7H1RSSovRNmd1p3jKektGuFWdCrIgrFsYHwfXLd5yQlCf/W2y5H1X6FVKgo55SwUKqrS3E5fHkT2tVk3zGxifB9T3AosqaN/5sNBfwaHsnbtd3Nt0Obzx8FJe8NU5Nd/oa/Xvdhf3QdNzWT8rnz+aWLc2GTzwowvKZ0rmcW99yFsPj4tm2Lw==",
+              "SigningCertUrl": "https://sns.ap-southeast-2.amazonaws.com/SimpleNotificationService-a86cb10b4e1f29c941702d737128f7b6.pem",
+              "UnsubscribeUrl": "https://sns.ap-southeast-2.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:ap-southeast-2:185976345635:cf-webhook:c9393a55-766c-42b2-bd02-3335fe3dc4ed",
+              "MessageAttributes": {
+                  "CF-Trace-ID": {
+                      "Type": "String",
+                      "Value": "6ed155d3-e08c-482e-af3a-879ab9f7a7dc"
+                  },
+                  "square-version": {
+                      "Type": "String",
+                      "Value": "2020-03-25"
+                  }
+              }
+          }
+      }
+  ]
+}

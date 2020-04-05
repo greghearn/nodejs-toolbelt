@@ -8,7 +8,8 @@
 const jsonParserMiddyware = (args) => {
   const defaults = {
     paths: [],
-    debug: false
+    debug: false,
+    silent: true
   }
   const options = Object.assign({}, defaults, args)
 
