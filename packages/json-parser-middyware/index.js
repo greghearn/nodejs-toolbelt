@@ -39,7 +39,9 @@ const jsonParserMiddyware = (args) => {
             try {
               _set(event, options.path[index], parse(value))
             } catch {
-              throw new Error(`${options.path[index]} property value is not in json format`)
+              if (!options.silent) {
+                throw new Error(`${options.path[index]} property value is not in json format`)
+              }
             }
           }
         }
