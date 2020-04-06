@@ -3,12 +3,31 @@
 const _get = require('lodash.get')
 const _set = require('lodash.set')
 
-const get = function get (event, path) {
-  return _get(event, path)
+/**
+ * Get the value of a property of an object using a path
+ * @param {*} object
+ * @param {*} path
+ */
+const get = function get (object, path) {
+  const value = _get(object, path)
+  if (!value) {
+    throw new Error(`${path} property not found`)
+  }
+  return value
 }
 
-const parse = function parse (string) {
-  return JSON.parse(string)
+/**
+ * Sets a value of an object at a specified path
+ * @param {*} object
+ * @param {*} path
+ * @param {*} value
+ */
+const set = function set (object, path, value) {
+  try {
+    return _set(object, path, JSON.parse(value))
+  } catch (e) {
+    throw new Error(`${path} property value is not in json format`)
+  }
 }
 
 /**
@@ -27,24 +46,16 @@ const jsonParserMiddyware = (args) => {
   return ({
     before: (handler, next) => {
       const { event } = handler
-      if (typeof options.path === 'string') options.path = [options.path]
-      if (Array.isArray(options.path)) {
-        const len = options.path.length
-        for (var index = 0; index < len; index += 1) {
-          const value = get(event, options.path[index])
-          if (!value && !options.silent) {
-            throw new Error(`${options.path[index]} property not found`)
-          }
-          if (value) {
-            try {
-              _set(event, options.path[index], parse(value))
-            } catch {
-              if (!options.silent) {
-                throw new Error(`${options.path[index]} property value is not in json format`)
-              }
-            }
+      try {
+        if (typeof options.path === 'string') options.path = [options.path]
+        if (Array.isArray(options.path)) {
+          for (var i = 0, len = options.path.length; i < len; i += 1) {
+            const value = get(event, options.path[i])
+            set(event, options.path[i], value)
           }
         }
+      } catch (e) {
+        if (!options.silent) throw e
       }
       next()
     },
