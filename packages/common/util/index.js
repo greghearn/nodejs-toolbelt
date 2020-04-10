@@ -1,10 +1,43 @@
 'use strict'
 
-const util = {
+var util = {
 
   uuid: {
     v4: function uuidV4 () {
       return require('uuid').v4()
+    }
+  },
+
+  /**
+   * Date and time utility functions.
+   */
+  date: {
+
+    /**
+     * @return [Date] the current JavaScript date object.
+     */
+    getDate: function getDate (offset = 0) {
+      if (offset) { // use offset when non-zero
+        return new Date(new Date().getTime() + offset)
+      } else {
+        return new Date()
+      }
+    },
+
+    /**
+     * @return [String] the date in ISO-8601 format
+     */
+    iso8601: function iso8601 (date) {
+      if (date === undefined) { date = util.date.getDate() }
+      return date.toISOString().replace(/\.\d{3}Z$/, 'Z')
+    },
+
+    /**
+     * @return [String] the date in RFC 822 format
+     */
+    rfc822: function rfc822 (date) {
+      if (date === undefined) { date = util.date.getDate() }
+      return date.toUTCString()
     }
   },
 
@@ -25,19 +58,28 @@ const util = {
     }
   },
 
-  property: function property (obj, name, value, enumerable, isValue) {
-    var opts = {
-      configurable: true,
-      enumerable: enumerable !== undefined ? enumerable : true
-    }
-    if (typeof value === 'function' && !isValue) {
-      opts.get = value
-    } else {
-      opts.value = value
-      opts.writable = true
-    }
+  string: {
+    length: function length (string) {
+      if (typeof string === 'string') return string.length
+      else return 0
+    },
 
-    Object.defineProperty(obj, name, opts)
+    upperFirst: function upperFirst (string) {
+      return string[0].toUpperCase() + string.substr(1)
+    },
+
+    lowerFirst: function lowerFirst (string) {
+      return string[0].toLowerCase() + string.substr(1)
+    }
+  },
+
+  isEmpty: function isEmpty (obj) {
+    for (var prop in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+        return false
+      }
+    }
+    return true
   },
 
   /* Abort constant */
@@ -86,13 +128,19 @@ const util = {
     return util.update(util.copy(obj1), obj2)
   },
 
-  isEmpty: function isEmpty (obj) {
-    for (var prop in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, prop)) {
-        return false
-      }
+  property: function property (obj, name, value, enumerable, isValue) {
+    var opts = {
+      configurable: true,
+      enumerable: enumerable !== undefined ? enumerable : true
     }
-    return true
+    if (typeof value === 'function' && !isValue) {
+      opts.get = value
+    } else {
+      opts.value = value
+      opts.writable = true
+    }
+
+    Object.defineProperty(obj, name, opts)
   }
 }
 
