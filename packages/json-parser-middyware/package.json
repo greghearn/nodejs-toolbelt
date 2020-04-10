@@ -1,6 +1,6 @@
 {
   "name": "@greghearn/json-parser-middyware",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Middy middleware module used to convert a json string to an object via object path notation",
   "main": "index.js",
   "scripts": {
