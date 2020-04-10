@@ -1,6 +1,6 @@
 'use strict'
 
-const random = require('../index')
+const random = require('../random')
 const MIN_NUMBER = 0
 const MAX_NUMBER = Number.MAX_SAFE_INTEGER
 
